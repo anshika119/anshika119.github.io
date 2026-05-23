@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anshika Singh | Software Development Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080b0f;
+      --bg2: #0d1117;
+      --surface: #141920;
+      --border: rgba(255,255,255,0.07);
+      --border-strong: rgba(255,255,255,0.13);
+      --accent: #e8a44a;
+      --text: #f0ede6;
+      --muted: #6b7685;
+      --soft: #a0acba;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Syne', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 1.2rem 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(8,11,15,0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 0.5px solid var(--border);
+    }
+    .nav-logo { font-family: var(--font-mono); font-size: 0.82rem; color: var(--accent); letter-spacing: 0.06em; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--soft);
+      font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-resume {
+      padding: 0.5rem 1.25rem;
+      font-family: var(--font-sans); font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none;
+      border: 0.5px solid var(--border-strong); color: var(--soft);
+      transition: all 0.2s;
+    }
+    .nav-resume:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh; display: flex; align-items: flex-end;
+      padding: 0 3rem 5.5rem; position: relative; overflow: hidden;
+    }
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: radial-gradient(ellipse 70% 60% at 40% 60%, black 20%, transparent 75%);
+    }
+    .hero-glow {
+      position: absolute; top: 10%; right: 5%;
+      width: 520px; height: 520px;
+      background: radial-gradient(circle, rgba(232,164,74,0.1) 0%, transparent 65%);
+      border-radius: 50%; pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 1; }
+    .hero-tag {
+      font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent);
+      letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1.5rem;
+      opacity: 0; animation: fadeUp 0.7s 0.2s forwards;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .hero-tag::before { content: ''; display: block; width: 30px; height: 1px; background: var(--accent); }
+    .hero-name {
+      font-family: var(--font-display); font-size: clamp(4.5rem, 11vw, 10rem);
+      font-weight: 300; line-height: 0.92; letter-spacing: -0.02em; margin-bottom: 2rem;
+      opacity: 0; animation: fadeUp 0.8s 0.35s forwards;
+    }
+    .hero-name em { font-style: italic; color: var(--accent); }
+    .hero-desc {
+      max-width: 500px; color: var(--soft); font-size: 0.95rem; line-height: 1.85;
+      margin-bottom: 2.75rem; font-weight: 400;
+      opacity: 0; animation: fadeUp 0.8s 0.5s forwards;
+    }
+    .hero-ctas {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp 0.8s 0.65s forwards;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.85rem 2rem; font-family: var(--font-sans);
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; text-decoration: none; border-radius: 1px; transition: all 0.22s;
+    }
+    .btn-primary { background: var(--accent); color: #080b0f; border: 1px solid var(--accent); }
+    .btn-primary:hover { background: #d4903a; border-color: #d4903a; transform: translateY(-2px); }
+    .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border-strong); }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+    .hero-scroll {
+      position: absolute; bottom: 2.5rem; right: 3rem;
+      display: flex; align-items: center; gap: 0.75rem;
+      font-family: var(--font-mono); font-size: 0.68rem; color: var(--muted); letter-spacing: 0.1em;
+      opacity: 0; animation: fadeUp 0.8s 1.1s forwards;
+    }
+    .scroll-line { width: 44px; height: 1px; background: linear-gradient(90deg, transparent, var(--muted)); }
+
+    /* SHARED */
+    section { padding: 6.5rem 3rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent);
+      letter-spacing: 0.22em; text-transform: uppercase; margin-bottom: 0.6rem;
+    }
+    .section-title {
+      font-family: var(--font-display); font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 300; line-height: 1.1; margin-bottom: 4rem;
+    }
+    .section-title em { font-style: italic; color: var(--accent); }
+
+    /* ABOUT */
+    #about { background: var(--bg2); }
+    .about-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 5rem; align-items: start; }
+    .about-text p { color: var(--soft); line-height: 1.9; margin-bottom: 1.2rem; font-size: 0.93rem; }
+    .about-text p.lead { font-family: var(--font-display); font-size: 1.3rem; color: var(--text); line-height: 1.65; }
+    .about-stats { display: flex; flex-direction: column; }
+    .stat-row {
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 1.4rem 0; border-bottom: 0.5px solid var(--border);
+    }
+    .stat-row:first-child { border-top: 0.5px solid var(--border); }
+    .stat-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    .stat-value { font-family: var(--font-display); font-size: 1.9rem; font-weight: 300; }
+    .stat-value small { font-family: var(--font-sans); font-size: 0.72rem; font-weight: 400; color: var(--muted); margin-left: 0.25rem; }
+
+    /* SKILLS */
+    .skills-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--border); border: 0.5px solid var(--border);
+    }
+    .skill-category { background: var(--bg); padding: 1.75rem; }
+    .skill-cat-title { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.1rem; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+    .skill-tag {
+      display: inline-block; padding: 0.28rem 0.7rem;
+      background: var(--surface); border: 0.5px solid var(--border-strong);
+      font-size: 0.75rem; font-family: var(--font-mono); color: var(--soft); transition: all 0.18s;
+    }
+    .skill-tag:hover { border-color: var(--accent); color: var(--accent); background: rgba(232,164,74,0.05); }
+
+    /* EXPERIENCE */
+    #experience { background: var(--bg2); }
+    .timeline { position: relative; padding-left: 1.75rem; }
+    .timeline::before {
+      content: ''; position: absolute; left: 0; top: 0.5rem; bottom: 0;
+      width: 1px; background: linear-gradient(to bottom, var(--accent) 0%, var(--border) 60%, transparent 100%);
+    }
+    .timeline-item { position: relative; padding: 0 0 3.5rem 2.75rem; }
+    .timeline-dot {
+      position: absolute; left: -1.75rem; top: 0.45rem;
+      width: 9px; height: 9px; border-radius: 50%; background: var(--accent);
+      box-shadow: 0 0 0 3px var(--bg2), 0 0 0 4.5px var(--accent);
+    }
+    .timeline-date { font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.4rem; }
+    .timeline-role { font-family: var(--font-display); font-size: 1.55rem; font-weight: 300; margin-bottom: 0.2rem; }
+    .timeline-company { font-size: 0.78rem; font-weight: 700; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1.25rem; }
+    .timeline-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; max-width: 680px; }
+    .timeline-bullets li {
+      color: var(--soft); font-size: 0.88rem; line-height: 1.75;
+      padding-left: 1.1rem; position: relative;
+    }
+    .timeline-bullets li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 0.75rem; top: 0.1rem; }
+    .timeline-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.2rem; }
+    .t-tag { padding: 0.2rem 0.6rem; font-family: var(--font-mono); font-size: 0.68rem; color: var(--muted); border: 0.5px solid var(--border-strong); }
+
+    /* PROJECTS */
+    .projects-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 1rem; }
+    .projects-subhead { font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted); letter-spacing: 0.08em; }
+    .projects-section-label { font-family: var(--font-mono); font-size: 0.7rem; color: var(--accent); letter-spacing: 0.16em; text-transform: uppercase; margin: 3rem 0 1rem; }
+    .projects-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--border); border: 0.5px solid var(--border);
+      margin-bottom: 1px;
+    }
+    .projects-grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .project-card {
+      background: var(--bg); padding: 2.25rem;
+      position: relative; overflow: hidden; transition: background 0.3s;
+    }
+    .project-card::after {
+      content: attr(data-index);
+      position: absolute; top: 1.25rem; right: 1.5rem;
+      font-family: var(--font-display); font-size: 3.5rem; font-weight: 300;
+      color: var(--border-strong); line-height: 1; transition: color 0.3s; pointer-events: none;
+    }
+    .project-card:hover { background: var(--surface); }
+    .project-card:hover::after { color: rgba(232,164,74,0.1); }
+    .project-kind {
+      font-family: var(--font-mono); font-size: 0.66rem; color: var(--accent);
+      letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 0.65rem;
+    }
+    .project-name { font-family: var(--font-display); font-size: 1.45rem; font-weight: 300; margin-bottom: 0.85rem; line-height: 1.2; }
+    .project-desc { color: var(--soft); font-size: 0.84rem; line-height: 1.8; margin-bottom: 1.4rem; }
+    .project-stack { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .p-tag {
+      padding: 0.18rem 0.55rem; font-family: var(--font-mono); font-size: 0.66rem;
+      color: var(--accent); border: 0.5px solid rgba(232,164,74,0.25); background: rgba(232,164,74,0.04);
+    }
+
+    /* EDUCATION & CERTIFICATIONS */
+    #education { background: var(--bg2); }
+    .edu-cert-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 0.5px solid var(--border); }
+    .edu-card { background: var(--bg); padding: 2.25rem 2.5rem; position: relative; }
+    .edu-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--accent); }
+    .edu-kind { font-family: var(--font-mono); font-size: 0.68rem; color: var(--accent); letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 0.75rem; }
+    .edu-degree { font-family: var(--font-display); font-size: 1.4rem; font-weight: 300; margin-bottom: 0.2rem; }
+    .edu-school { font-size: 0.8rem; font-weight: 700; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.5rem; }
+    .edu-year { font-family: var(--font-mono); font-size: 0.75rem; color: var(--soft); margin-bottom: 0.75rem; }
+    .edu-desc { color: var(--soft); font-size: 0.84rem; line-height: 1.75; }
+
+    /* CONTACT */
+    #contact { text-align: center; padding: 8rem 3rem; position: relative; overflow: hidden; }
+    .contact-glow {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      width: 700px; height: 500px;
+      background: radial-gradient(ellipse, rgba(232,164,74,0.06) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .contact-title { font-family: var(--font-display); font-size: clamp(3rem, 8vw, 7rem); font-weight: 300; line-height: 1; margin-bottom: 1.25rem; }
+    .contact-title em { font-style: italic; color: var(--accent); }
+    .contact-sub { color: var(--soft); font-size: 0.9rem; max-width: 380px; margin: 0 auto 3rem; line-height: 1.8; }
+    .contact-links { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem; }
+    .contact-link {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.85rem 1.75rem; text-decoration: none;
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      border: 0.5px solid var(--border-strong); color: var(--soft); transition: all 0.22s;
+    }
+    .contact-link:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+    .contact-link svg { width: 15px; height: 15px; }
+
+    /* FOOTER */
+    footer {
+      padding: 1.75rem 3rem; border-top: 0.5px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    footer p { font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted); }
+    .location { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.7rem; color: var(--muted); }
+    .location-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2.2s infinite; }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links, .nav-resume { display: none; }
+      .hero { padding: 0 1.5rem 4rem; }
+      section { padding: 4rem 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+      .projects-grid, .projects-grid-2 { grid-template-columns: 1fr; }
+      .edu-cert-grid { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+    }
+    @media (max-width: 600px) {
+      .skills-grid { grid-template-columns: 1fr; }
+      .hero-name { font-size: 3.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Anshika Singh</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="mailto:anshika9112002@gmail.com" class="nav-resume">Hire Me</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <p class="hero-tag">Software Development Engineer · Bangalore, India</p>
+    <h1 class="hero-name">Anshika<br><em>Singh</em></h1>
+    <p class="hero-desc">
+      Full-stack engineer at Kruzr, building mobility technology that makes driving
+      safer and smarter. I work across Flutter, Spring Boot, Elasticsearch, Python ML pipelines,
+      and everything in between.
+    </p>
+    <div class="hero-ctas">
+      <a href="#projects" class="btn btn-primary">View Projects</a>
+      <a href="#contact" class="btn btn-outline">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-scroll"><span class="scroll-line"></span>scroll to explore</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <div class="section-label">About Me</div>
+        <p class="lead">
+          I build systems that sit at the intersection of mobility, data, and intelligent
+          software — from production microservices to ML-powered safety platforms.
+        </p>
+        <p>
+          At Kruzr, I've worked across the full stack: migrating production microservices,
+          building driver-facing Flutter apps, designing notification architectures, and writing
+          UX research docs that actually shape the product. I thrive when I own a problem
+          end-to-end.
+        </p>
+        <p>
+          My personal projects go deeper — DriveScore, RideInsights, and QueryMesh are all
+          built to solve real engineering challenges I find interesting, not just to fill a
+          portfolio. I like systems that are thoughtfully designed, not just functional.
+        </p>
+      </div>
+      <div class="about-stats reveal">
+        <div class="stat-row">
+          <span class="stat-label">Current Role</span>
+          <span class="stat-value" style="font-size:1.3rem">SDE<small>@ Kruzr</small></span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Since</span>
+          <span class="stat-value">Jan<small>2025</small></span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Graduated</span>
+          <span class="stat-value">2025<small>B.Tech CSE</small></span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Stack</span>
+          <span class="stat-value" style="font-size:1.1rem">Full<small>Stack + ML</small></span>
+        </div>
+        <div class="stat-row">
+          <span class="stat-label">Location</span>
+          <span class="stat-value" style="font-size:1.2rem">BLR<small>India</small></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="section-label">Technical Stack</div>
+    <h2 class="section-title reveal">What I <em>build</em> with</h2>
+    <div class="skills-grid reveal">
+      <div class="skill-category">
+        <div class="skill-cat-title">Languages</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Java</span>
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">Dart</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">TypeScript</span>
+          <span class="skill-tag">SQL</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <div class="skill-cat-title">Frameworks</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Spring Boot</span>
+          <span class="skill-tag">Flutter</span>
+          <span class="skill-tag">FlutterFlow</span>
+          <span class="skill-tag">FastAPI</span>
+          <span class="skill-tag">React</span>
+          <span class="skill-tag">Node.js</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <div class="skill-cat-title">Databases</div>
+        <div class="skill-tags">
+          <span class="skill-tag">PostgreSQL</span>
+          <span class="skill-tag">MySQL</span>
+          <span class="skill-tag">MongoDB</span>
+          <span class="skill-tag">Elasticsearch</span>
+          <span class="skill-tag">Redis</span>
+          <span class="skill-tag">Firestore</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <div class="skill-cat-title">ML & Data</div>
+        <div class="skill-tags">
+          <span class="skill-tag">scikit-learn</span>
+          <span class="skill-tag">XGBoost</span>
+          <span class="skill-tag">Random Forest</span>
+          <span class="skill-tag">Feature Eng.</span>
+          <span class="skill-tag">ML Pipelines</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <div class="skill-cat-title">Cloud & DevOps</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Firebase</span>
+          <span class="skill-tag">FCM</span>
+          <span class="skill-tag">Cloud Functions</span>
+          <span class="skill-tag">Docker</span>
+          <span class="skill-tag">Kubernetes</span>
+          <span class="skill-tag">Railway</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <div class="skill-cat-title">Concepts</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Microservices</span>
+          <span class="skill-tag">REST APIs</span>
+          <span class="skill-tag">Event-driven</span>
+          <span class="skill-tag">Polyglot DB</span>
+          <span class="skill-tag">UX Research</span>
+          <span class="skill-tag">System Design</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="section-label">Experience</div>
+    <h2 class="section-title reveal">Where I've <em>worked</em></h2>
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-date">Jan 2025 – Present</div>
+        <div class="timeline-role">Software Development Engineer</div>
+        <div class="timeline-company">Kruzr Mobility Technology Solutions · Bangalore, India</div>
+        <ul class="timeline-bullets">
+          <li>Built and integrated a driver-facing mobile application using FlutterFlow, developing custom widgets and backend-connected actions to deliver a complete ride-assist experience.</li>
+          <li>Independently migrated 4 production microservices from Spring Boot 2.x to 3.x and Elasticsearch 6.x to 8.x, diagnosing and resolving issues spanning query syntax changes, API endpoint updates, and data consistency gaps.</li>
+          <li>Conducted comprehensive UX research for the Alert Control Tower — a configurable push notification management system — producing detailed documentation on alert taxonomy, trigger logic, SACHET/NDMA API integration, and a three-layer Notification Engine architecture; received positively by the team.</li>
+          <li>Authored technical documentation for the Kruzr mobile application and Kruzr SDK, improving internal knowledge transfer and developer onboarding.</li>
+        </ul>
+        <div class="timeline-tags">
+          <span class="t-tag">Flutter</span>
+          <span class="t-tag">FlutterFlow</span>
+          <span class="t-tag">Spring Boot</span>
+          <span class="t-tag">Elasticsearch</span>
+          <span class="t-tag">Firebase</span>
+          <span class="t-tag">FCM</span>
+          <span class="t-tag">UX Research</span>
+          <span class="t-tag">Microservices</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="section-label">Projects</div>
+    <h2 class="section-title reveal">Things I've <em>built</em></h2>
+
+    <div class="projects-section-label reveal">Personal Projects</div>
+    <div class="projects-grid reveal">
+      <div class="project-card" data-index="01">
+        <div class="project-kind">Mobility Analytics</div>
+        <div class="project-name">RideInsights</div>
+        <div class="project-desc">Full-stack mobility analytics dashboard with a Flutter Web frontend and Spring Boot microservices backend. Ingests trip data into Elasticsearch for real-time queries, uses PostgreSQL for structured storage, Redis for caching, and includes a Python anomaly detection module to flag unusual ride patterns.</div>
+        <div class="project-stack">
+          <span class="p-tag">Flutter Web</span>
+          <span class="p-tag">Spring Boot</span>
+          <span class="p-tag">Elasticsearch</span>
+          <span class="p-tag">PostgreSQL</span>
+          <span class="p-tag">Redis</span>
+          <span class="p-tag">Python</span>
+        </div>
+      </div>
+      <div class="project-card" data-index="02">
+        <div class="project-kind">ML Platform</div>
+        <div class="project-name">DriveScore AI</div>
+        <div class="project-desc">ML pipeline that takes GPS and telematics data and calculates a driver safety risk score. Engineered features like harsh braking frequency, speed variance, night driving ratio, and acceleration patterns. Trained Random Forest and XGBoost models and deployed the best as a REST API via FastAPI.</div>
+        <div class="project-stack">
+          <span class="p-tag">Python</span>
+          <span class="p-tag">FastAPI</span>
+          <span class="p-tag">scikit-learn</span>
+          <span class="p-tag">XGBoost</span>
+          <span class="p-tag">PostgreSQL</span>
+          <span class="p-tag">Redis</span>
+        </div>
+      </div>
+      <div class="project-card" data-index="03">
+        <div class="project-kind">Architecture</div>
+        <div class="project-name">QueryMesh</div>
+        <div class="project-desc">Polyglot persistence architecture with a data routing layer that directs each data type to the right database. Trip records → PostgreSQL, event logs → MongoDB, vehicle states → Redis, search queries → Elasticsearch. A Spring Boot API abstracts all complexity from client services.</div>
+        <div class="project-stack">
+          <span class="p-tag">Spring Boot</span>
+          <span class="p-tag">PostgreSQL</span>
+          <span class="p-tag">MongoDB</span>
+          <span class="p-tag">Redis</span>
+          <span class="p-tag">Elasticsearch</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="projects-section-label reveal" style="margin-top:2.5rem">Work Projects · Kruzr</div>
+    <div class="projects-grid projects-grid-2 reveal">
+      <div class="project-card" data-index="04">
+        <div class="project-kind">Notification System</div>
+        <div class="project-name">Alert Control Tower</div>
+        <div class="project-desc">Configurable push notification and alert management system for the Drive Smart program. Designed full UX research documentation, alert taxonomy, trigger logic, and admin dashboard requirements. Integrated SACHET NDMA weather alerts and defined the three-layer Notification Engine architecture (L1/L2/L3).</div>
+        <div class="project-stack">
+          <span class="p-tag">FCM</span>
+          <span class="p-tag">Firebase</span>
+          <span class="p-tag">SACHET NDMA API</span>
+          <span class="p-tag">System Design</span>
+          <span class="p-tag">UX Research</span>
+        </div>
+      </div>
+      <div class="project-card" data-index="05">
+        <div class="project-kind">Mobile · Backend</div>
+        <div class="project-name">Microservice Migration</div>
+        <div class="project-desc">Independently migrated 4 production microservices from Spring Boot 2.x → 3.x and Elasticsearch 6.x → 8.x. Diagnosed and resolved query syntax changes, API endpoint updates, and data consistency gaps across services — all without breaking production.</div>
+        <div class="project-stack">
+          <span class="p-tag">Spring Boot 3.x</span>
+          <span class="p-tag">Elasticsearch 8.x</span>
+          <span class="p-tag">Java</span>
+          <span class="p-tag">Microservices</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION & CERTIFICATIONS -->
+<section id="education">
+  <div class="container">
+    <div class="section-label">Education & Certifications</div>
+    <h2 class="section-title reveal">Academic <em>background</em></h2>
+    <div class="edu-cert-grid reveal">
+      <div class="edu-card">
+        <div class="edu-kind">Degree</div>
+        <div class="edu-degree">B.Tech — Computer Science & Engineering</div>
+        <div class="edu-school">VIT Bhopal University</div>
+        <div class="edu-year">2021 – 2025</div>
+        <div class="edu-desc">Four-year undergraduate program covering data structures, algorithms, distributed systems, databases, and software engineering — the foundations I apply daily in production work.</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-kind">Certification</div>
+        <div class="edu-degree">Microservices with Node.js, React, TypeScript & Kubernetes</div>
+        <div class="edu-school">Udemy</div>
+        <div class="edu-year">2026</div>
+        <div class="edu-desc">In-depth course covering microservice architecture, containerisation with Docker, orchestration with Kubernetes, and building event-driven systems with TypeScript and React frontends.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-glow"></div>
+  <div class="contact-title reveal">Let's <em>connect</em></div>
+  <p class="contact-sub reveal">Open to interesting problems, collaborations, or just a good engineering conversation.</p>
+  <div class="contact-links reveal">
+    <a href="mailto:anshika9112002@gmail.com" class="contact-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+      Email
+    </a>
+    <a href="https://linkedin.com/in/anshika911" target="_blank" class="contact-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      LinkedIn
+    </a>
+    <a href="https://github.com/yourusername" target="_blank" class="contact-link">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+      GitHub
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Anshika Singh. All rights reserved.</p>
+  <div class="location"><div class="location-dot"></div>Bangalore, India</div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), 0);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
