@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Agents Explained · Anshika Singh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#080b0f;--bg2:#0d1117;--surface:#141920;--border:rgba(255,255,255,0.07);--border-strong:rgba(255,255,255,0.13);--accent:#e8a44a;--text:#f0ede6;--muted:#6b7685;--soft:#a0acba;--font-display:'Cormorant Garamond',Georgia,serif;--font-sans:'Syne',sans-serif;--font-mono:'DM Mono',monospace}
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--text);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.2rem 3rem;display:flex;align-items:center;justify-content:space-between;background:rgba(8,11,15,0.85);backdrop-filter:blur(20px);border-bottom:0.5px solid var(--border)}
+    .nav-logo{font-family:var(--font-mono);font-size:0.82rem;color:var(--accent);letter-spacing:0.06em;text-decoration:none}
+    .nav-links{display:flex;gap:2.5rem;list-style:none}
+    .nav-links a{text-decoration:none;color:var(--soft);font-size:0.75rem;letter-spacing:0.14em;text-transform:uppercase;font-weight:600;transition:color 0.2s}
+    .nav-links a:hover,.nav-links a.active{color:var(--accent)}
+    .nav-hire{padding:0.5rem 1.25rem;font-family:var(--font-sans);font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;border:0.5px solid var(--border-strong);color:var(--soft);transition:all 0.2s}
+    .nav-hire:hover{border-color:var(--accent);color:var(--accent)}
+    .post-hero{margin-top:65px;position:relative;height:55vh;min-height:380px;overflow:hidden}
+    .post-hero img{width:100%;height:100%;object-fit:cover;filter:brightness(0.4)}
+    .post-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,11,15,1) 0%,rgba(8,11,15,0.3) 60%,transparent 100%)}
+    .post-hero-content{position:absolute;bottom:0;left:0;right:0;padding:3rem}
+    .back-link{display:inline-flex;align-items:center;gap:0.5rem;font-family:var(--font-mono);font-size:0.7rem;color:var(--muted);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:1.5rem;transition:color 0.2s}
+    .back-link:hover{color:var(--accent)}
+    .post-cats{display:flex;gap:0.5rem;margin-bottom:1rem;flex-wrap:wrap}
+    .post-cat{font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.14em;text-transform:uppercase;padding:0.2rem 0.6rem;border:0.5px solid rgba(232,164,74,0.35);color:var(--accent);background:rgba(232,164,74,0.06)}
+    .post-title{font-family:var(--font-display);font-size:clamp(2rem,5vw,3.5rem);font-weight:300;line-height:1.1;margin-bottom:1.25rem;max-width:800px}
+    .post-title em{font-style:italic;color:var(--accent)}
+    .post-byline{display:flex;gap:1.5rem;align-items:center;font-family:var(--font-mono);font-size:0.72rem;color:var(--soft);flex-wrap:wrap}
+    .post-byline strong{color:var(--accent)}
+    .post-layout{display:grid;grid-template-columns:1fr 260px;gap:4rem;max-width:1100px;margin:0 auto;padding:4rem 3rem 6rem}
+    .post-body{min-width:0}
+    .post-sidebar{position:sticky;top:90px;align-self:start}
+    .toc-label{font-family:var(--font-mono);font-size:0.68rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem}
+    .toc{list-style:none}
+    .toc li a{display:block;padding:0.6rem 0;font-size:0.8rem;color:var(--soft);text-decoration:none;border-top:0.5px solid var(--border);transition:color 0.2s;line-height:1.4}
+    .toc li:last-child a{border-bottom:0.5px solid var(--border)}
+    .toc li a:hover{color:var(--accent)}
+    .post-body h2{font-family:var(--font-display);font-size:1.9rem;font-weight:300;margin:3rem 0 1rem;padding-top:1rem;line-height:1.2}
+    .post-body h2 em{font-style:italic;color:var(--accent)}
+    .post-body h3{font-family:var(--font-sans);font-size:1rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--accent);margin:2rem 0 0.75rem}
+    .post-body p{color:var(--soft);font-size:0.95rem;line-height:1.9;margin-bottom:1.4rem}
+    .post-body ul,.post-body ol{margin:0 0 1.4rem 1.25rem;color:var(--soft);font-size:0.95rem;line-height:1.9}
+    .post-body li{margin-bottom:0.5rem}
+    .post-body strong{color:var(--text);font-weight:600}
+    .post-body a{color:var(--accent);text-decoration:none;border-bottom:0.5px solid rgba(232,164,74,0.3);transition:border-color 0.2s}
+    .post-body a:hover{border-color:var(--accent)}
+    .callout{border-left:3px solid var(--accent);padding:1rem 1.5rem;margin:2rem 0;background:rgba(232,164,74,0.05)}
+    .callout p{margin:0;color:var(--text);font-family:var(--font-display);font-size:1.15rem;font-weight:300;line-height:1.7;font-style:italic}
+    .agent-loop{background:var(--bg2);border:0.5px solid var(--border);padding:2rem;margin:2rem 0;display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap}
+    .loop-step{display:flex;flex-direction:column;align-items:center;gap:0.5rem;min-width:100px}
+    .loop-icon{width:48px;height:48px;border-radius:50%;background:rgba(232,164,74,0.1);border:1px solid rgba(232,164,74,0.3);display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+    .loop-label{font-family:var(--font-mono);font-size:0.65rem;color:var(--accent);letter-spacing:0.12em;text-transform:uppercase;text-align:center}
+    .loop-arrow{font-family:var(--font-mono);color:var(--muted);font-size:1.2rem;padding:0 0.5rem;align-self:center;margin-bottom:1.1rem}
+    .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:0.5px solid var(--border);margin:2rem 0}
+    .info-cell{background:var(--bg2);padding:1.5rem}
+    .info-cell-title{font-family:var(--font-mono);font-size:0.68rem;color:var(--accent);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:0.75rem}
+    .info-cell p{color:var(--soft);font-size:0.84rem;line-height:1.75;margin:0}
+    .refs{margin-top:4rem;padding-top:2rem;border-top:0.5px solid var(--border)}
+    .refs h2{font-family:var(--font-mono);font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1.25rem}
+    .refs ol{margin-left:1.25rem;color:var(--soft);font-size:0.85rem;line-height:1.8}
+    .refs ol li{margin-bottom:0.5rem}
+    .refs a{color:var(--soft);text-decoration:none;border-bottom:0.5px solid var(--border-strong);transition:color 0.2s,border-color 0.2s}
+    .refs a:hover{color:var(--accent);border-color:var(--accent)}
+    footer{padding:1.75rem 3rem;border-top:0.5px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+    footer p{font-family:var(--font-mono);font-size:0.7rem;color:var(--muted)}
+    .loc{display:flex;align-items:center;gap:0.5rem;font-family:var(--font-mono);font-size:0.7rem;color:var(--muted)}
+    .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2.2s infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.35}}
+    @media(max-width:900px){nav{padding:1rem 1.5rem}.nav-links,.nav-hire{display:none}.post-hero-content{padding:2rem 1.5rem}.post-layout{grid-template-columns:1fr;padding:3rem 1.5rem 4rem}.post-sidebar{display:none}.info-grid{grid-template-columns:1fr}.agent-loop{gap:0.5rem}footer{flex-direction:column;gap:0.75rem;text-align:center}}
+  </style>
+</head>
+<body>
+<nav>
+  <a href="../index.html" class="nav-logo">Anshika Singh</a>
+  <ul class="nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="../index.html#about">About</a></li>
+    <li><a href="../index.html#projects">Projects</a></li>
+    <li><a href="../blog.html" class="active">Blog</a></li>
+    <li><a href="../index.html#contact">Contact</a></li>
+  </ul>
+  <a href="mailto:anshika9112002@gmail.com" class="nav-hire">Hire Me</a>
+</nav>
+
+<div class="post-hero">
+  <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1400&q=80" alt="AI neural network visualization"/>
+  <div class="post-hero-overlay"></div>
+  <div class="post-hero-content">
+    <a href="../blog.html" class="back-link">← Back to blog</a>
+    <div class="post-cats"><span class="post-cat">AI</span><span class="post-cat">Agents</span><span class="post-cat">LLMs</span></div>
+    <h1 class="post-title">AI Agents Explained: From Chatbots to Systems That <em>Actually Do Things</em></h1>
+    <div class="post-byline">
+      <span>By <strong>Anshika Singh</strong></span>
+      <span>May 15, 2026</span>
+      <span>7 min read</span>
+    </div>
+  </div>
+</div>
+
+<div class="post-layout">
+  <article class="post-body">
+
+    <p>If you've been following the AI space over the past year, you've heard the word "agents" everywhere. Every product launch mentions them. Every VC deck promises them. But ask most people what an AI agent actually is, and you'll get a vague answer involving chatbots and automation.</p>
+    <p>Let me give you the engineer's explanation — what agents really are, how the underlying loop works, why they're fundamentally different from a chatbot, and what this means for the software we build.</p>
+
+    <div class="callout"><p>"A chatbot answers questions. An agent pursues goals — and figures out how to get there on its own."</p></div>
+
+    <h2 id="chatbot-vs-agent">Chatbot vs <em>Agent</em> — the real difference</h2>
+    <p>A standard LLM-based chatbot is reactive. You send a message, it generates a reply, done. It has no persistent memory beyond the current conversation, can't take actions in the world, and doesn't make multi-step plans.</p>
+    <p>An AI agent is different in three key ways:</p>
+    <ul>
+      <li><strong>It can use tools</strong> — it calls APIs, browses the web, runs code, reads files</li>
+      <li><strong>It plans across multiple steps</strong> — it doesn't just respond, it figures out what sequence of actions will achieve a goal</li>
+      <li><strong>It operates in a loop</strong> — it takes an action, observes the result, and decides what to do next</li>
+    </ul>
+
+    <h2 id="loop">The <em>Agent Loop</em></h2>
+    <p>At the core of every AI agent is a loop. It's called the Perception → Memory → Reasoning → Action loop, and understanding it makes everything else click.</p>
+
+    <div class="agent-loop">
+      <div class="loop-step">
+        <div class="loop-icon">👁</div>
+        <div class="loop-label">Perceive</div>
+      </div>
+      <div class="loop-arrow">→</div>
+      <div class="loop-step">
+        <div class="loop-icon">🧠</div>
+        <div class="loop-label">Memory</div>
+      </div>
+      <div class="loop-arrow">→</div>
+      <div class="loop-step">
+        <div class="loop-icon">💭</div>
+        <div class="loop-label">Reason</div>
+      </div>
+      <div class="loop-arrow">→</div>
+      <div class="loop-step">
+        <div class="loop-icon">⚡</div>
+        <div class="loop-label">Act</div>
+      </div>
+      <div class="loop-arrow">→</div>
+      <div class="loop-step">
+        <div class="loop-icon">🔁</div>
+        <div class="loop-label">Observe</div>
+      </div>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-cell">
+        <div class="info-cell-title">Perceive</div>
+        <p>The agent reads its inputs — the user's goal, tool results from previous steps, documents, code, or any other data fed into its context window.</p>
+      </div>
+      <div class="info-cell">
+        <div class="info-cell-title">Memory</div>
+        <p>Short-term memory lives in the context window. Long-term memory uses vector databases — embeddings of past interactions retrieved at query time.</p>
+      </div>
+      <div class="info-cell">
+        <div class="info-cell-title">Reason</div>
+        <p>The LLM thinks through the current state and decides what to do next — which tool to call, what question to answer, or when the goal is complete.</p>
+      </div>
+      <div class="info-cell">
+        <div class="info-cell-title">Act</div>
+        <p>The agent executes an action — a function call, API request, code execution, or a message to the user. The result feeds back into the next loop iteration.</p>
+      </div>
+    </div>
+
+    <h2 id="tools">Tool Use — <em>how agents connect to the real world</em></h2>
+    <p>Tools are what separate an agent from a text predictor. A tool is any function the LLM can call — a web search, a database query, a code interpreter, an email sender. The model decides when to call a tool and what arguments to pass.</p>
+    <p>Modern LLM APIs (OpenAI, Anthropic, Google) all support function calling or tool use natively. You define a tool with a name, description, and input schema. The model reads the descriptions and decides which tool to invoke.</p>
+    <p>A practical example: give an agent a "search the web" tool, a "read URL" tool, and a "write file" tool. Ask it to research AI agent frameworks and write a summary. It will search, read several pages, synthesise the information, and write the file — all without further input from you.</p>
+
+    <h2 id="reasoning">ReAct — <em>Reasoning + Acting together</em></h2>
+    <p>One of the most influential papers in the agents space is <strong>ReAct (Reasoning + Acting)</strong>, published by researchers at Princeton and Google in 2022. The key insight: LLMs perform significantly better on complex tasks when they interleave reasoning traces with actions, rather than just acting.</p>
+    <p>In a ReAct agent, before each action the model writes its reasoning — "I need to find the current Elasticsearch version, so I should search for the official release notes." Then it acts. Then it reasons about the result. This inner monologue dramatically improves reliability and makes the agent's decisions transparent and debuggable.</p>
+
+    <div class="callout"><p>"ReAct showed that making the model 'think out loud' before acting isn't just good for humans to read — it actually makes the model smarter."</p></div>
+
+    <h2 id="memory">Memory — <em>the unsolved problem</em></h2>
+    <p>Context windows are getting larger (Gemini 1.5 supports 1 million tokens), but they're still finite and expensive. Real agents need smarter memory systems:</p>
+    <ul>
+      <li><strong>Working memory</strong> — the current context window, everything the agent is actively thinking about</li>
+      <li><strong>Episodic memory</strong> — a log of past interactions, retrieved as needed using semantic search over a vector database</li>
+      <li><strong>Semantic memory</strong> — factual knowledge, usually baked into the model's weights or retrieved from a knowledge base</li>
+      <li><strong>Procedural memory</strong> — learned skills and workflows, often encoded as few-shot examples or fine-tuned behaviour</li>
+    </ul>
+
+    <h2 id="multi-agent">Multi-agent systems</h2>
+    <p>A single agent handles one task at a time. But complex real-world workflows need parallel execution, specialisation, and coordination. This is where multi-agent systems come in — multiple specialised agents working together, passing results between each other like microservices.</p>
+    <p>A common pattern: an <strong>orchestrator agent</strong> receives the high-level goal, breaks it into subtasks, and delegates to specialised <strong>worker agents</strong> — one for research, one for writing, one for code. Results flow back to the orchestrator, which assembles the final output.</p>
+
+    <h2 id="developers">What this means for <em>software developers</em></h2>
+    <p>As engineers, AI agents are becoming a new layer of the stack. Instead of writing every step of a workflow imperatively, you describe the goal and the available tools, and the agent figures out the steps. This is genuinely new — it's not just autocomplete.</p>
+    <p>Practical things worth learning now:</p>
+    <ul>
+      <li>Function calling / tool use APIs in OpenAI, Anthropic Claude, Gemini</li>
+      <li>Agent frameworks: LangChain, LlamaIndex, CrewAI, AutoGen</li>
+      <li>Vector databases: Pinecone, Weaviate, pgvector (for memory)</li>
+      <li>Prompt engineering specifically for reasoning and tool selection</li>
+    </ul>
+
+    <div class="callout"><p>"Agents don't replace engineers. They make engineers who understand them dramatically more productive than those who don't."</p></div>
+
+    <div class="refs">
+      <h2>References</h2>
+      <ol>
+        <li><a href="https://arxiv.org/abs/2210.03629" target="_blank">ReAct: Synergizing Reasoning and Acting in Language Models — Yao et al., 2022</a></li>
+        <li><a href="https://www.anthropic.com/research/building-effective-agents" target="_blank">Building Effective Agents — Anthropic Research</a></li>
+        <li><a href="https://lilianweng.github.io/posts/2023-06-23-agent/" target="_blank">LLM Powered Autonomous Agents — Lilian Weng's Blog</a></li>
+        <li><a href="https://openai.com/blog/function-calling-and-other-api-updates" target="_blank">Function Calling and API Updates — OpenAI Blog</a></li>
+        <li><a href="https://arxiv.org/abs/2308.11432" target="_blank">AgentBench: Evaluating LLMs as Agents — Liu et al., 2023</a></li>
+      </ol>
+    </div>
+  </article>
+
+  <aside class="post-sidebar">
+    <div class="toc-label">In this post</div>
+    <ul class="toc">
+      <li><a href="#chatbot-vs-agent">Chatbot vs Agent</a></li>
+      <li><a href="#loop">The Agent Loop</a></li>
+      <li><a href="#tools">Tool Use</a></li>
+      <li><a href="#reasoning">ReAct Framework</a></li>
+      <li><a href="#memory">Memory systems</a></li>
+      <li><a href="#multi-agent">Multi-agent systems</a></li>
+      <li><a href="#developers">For developers</a></li>
+    </ul>
+  </aside>
+</div>
+
+<footer>
+  <p>© 2026 Anshika Singh · <a href="../blog.html" style="color:var(--accent);text-decoration:none">← All posts</a></p>
+  <div class="loc"><div class="dot"></div>Bangalore, India</div>
+</footer>
+</body>
+</html>
